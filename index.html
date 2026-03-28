@@ -21,7 +21,8 @@
   <style>
     * { cursor: default; }
     a, button { cursor: pointer !important; }
-    body { background: #000; overflow-x: hidden; }
+    body { background: #000; overflow-x: hidden; color: #fff; }
+    * { color: inherit; }
     .grayscale-img { filter: grayscale(100%); transition: filter 0.3s; }
     .grayscale-img:hover { filter: none; }
     .dotted { border-bottom: 1px dotted rgba(255,255,255,0.4); transition: border-color 0.2s; }
@@ -87,7 +88,7 @@
         <a href={href} download={download||undefined}
           target={ext ? '_blank' : undefined}
           rel={ext ? 'noopener noreferrer' : undefined}
-          className="group flex items-center gap-1 text-white hover:text-white transition-colors text-[13px] w-fit"
+          className="group flex items-center gap-1 text-white hover:text-white transition-colors text-[15px] w-fit"
         >
           <ScrambleText text={children} /><Arrow />
         </a>
@@ -98,18 +99,18 @@
     function ListItem({ num, title, company, href, date, bullets }) {
       return (
         <div className="mb-7 last:mb-0">
-          <p className="text-white text-[11px] mb-0.5 tabular-nums">{num}</p>
-          <p className="text-[15px] leading-snug mb-0.5">
+          <p className="text-white text-[13px] mb-0.5 tabular-nums">{num}</p>
+          <p className="text-[17px] leading-snug mb-0.5">
             <span className="text-white font-medium">{title} </span>
             <a href={href} target="_blank" rel="noopener noreferrer"
               className="group text-white hover:text-white transition-colors inline-flex items-center gap-0.5">
               @ <ScrambleText text={company} /><Arrow />
             </a>
           </p>
-          <p className="text-white text-[11px] italic mb-1.5">{date}</p>
+          <p className="text-white text-[13px] italic mb-1.5">{date}</p>
           <ul className="space-y-0.5">
             {bullets.map((b, i) => (
-              <li key={i} className="text-white text-[12px] leading-relaxed">· {b}</li>
+              <li key={i} className="text-white text-[14px] leading-relaxed">· {b}</li>
             ))}
           </ul>
         </div>
@@ -128,14 +129,14 @@
 
                 {/* Name + bio */}
                 <div>
-                  <h1 className="text-[26px] font-bold italic text-white mb-3 leading-tight">
+                  <h1 className="text-[28px] font-bold italic text-white mb-3 leading-tight">
                     Rajeshwar Sehdev
                   </h1>
                   <div className="space-y-0.5">
-                    <p className="text-white text-[13px]">Senior AI/ML Engineer</p>
-                    <p className="text-white text-[13px]">India · Available immediately</p>
+                    <p className="text-white text-[15px]">Senior AI/ML Engineer</p>
+                    <p className="text-white text-[15px]">India · Available immediately</p>
                     <a href="mailto:rajeshwarsehdev@gmail.com"
-                      className="text-white text-[13px] hover:text-white transition-colors dotted inline-block mt-0.5">
+                      className="text-white text-[15px] hover:text-white transition-colors dotted inline-block mt-0.5">
                       rajeshwarsehdev@gmail.com
                     </a>
                   </div>
@@ -161,7 +162,7 @@
 
                 {/* Skills */}
                 <div className="pt-4 border-t border-[#111] space-y-3">
-                  <p className="text-[11px] text-white uppercase tracking-widest">Skills</p>
+                  <p className="text-[13px] text-white uppercase tracking-widest">Skills</p>
                   {[
                     { cat: 'LLM & Agents', list: 'LangGraph · LangChain · GPT-4o · LLaMA · RAG · Agentic Workflows' },
                     { cat: 'ML & Data',    list: 'Python · PyTorch · Transformers · BERT · NLP · Scikit-learn' },
@@ -169,8 +170,8 @@
                     { cat: 'Apps',         list: 'FastAPI · Streamlit · PostgreSQL · REST APIs' },
                   ].map(({ cat, list }) => (
                     <div key={cat}>
-                      <p className="text-[10px] text-white uppercase tracking-wider mb-0.5">{cat}</p>
-                      <p className="text-[11px] text-white leading-relaxed">{list}</p>
+                      <p className="text-[12px] text-white uppercase tracking-wider mb-0.5">{cat}</p>
+                      <p className="text-[13px] text-white leading-relaxed">{list}</p>
                     </div>
                   ))}
                 </div>
@@ -179,7 +180,7 @@
 
               {/* ══ CENTER ════════════════════════════════════════════════ */}
               <div className="lg:col-span-4 a2">
-                <h2 className="text-[11px] text-white uppercase tracking-[0.2em] mb-6">Recent Experience</h2>
+                <h2 className="text-[13px] text-white uppercase tracking-[0.2em] mb-6">Recent Experience</h2>
 
                 <ListItem
                   num="01"
@@ -212,7 +213,7 @@
 
                 {/* Certifications */}
                 <div className="mt-8 pt-6 border-t border-[#111]">
-                  <h2 className="text-[11px] text-white uppercase tracking-[0.2em] mb-5">Certifications & Education</h2>
+                  <h2 className="text-[13px] text-white uppercase tracking-[0.2em] mb-5">Certifications & Education</h2>
                   <div className="space-y-4">
                     {[
                       { n: '01', title: 'AWS Machine Learning Specialty', meta: 'Amazon Web Services · 2025' },
@@ -220,10 +221,10 @@
                       { n: '03', title: 'Bachelor of Computer Applications', meta: 'GGSIP University · Delhi · 2016' },
                     ].map(({ n, title, meta }) => (
                       <div key={n} className="flex gap-4">
-                        <span className="text-white text-[11px] w-5 flex-shrink-0 tabular-nums pt-0.5">{n}</span>
+                        <span className="text-white text-[13px] w-5 flex-shrink-0 tabular-nums pt-0.5">{n}</span>
                         <div>
-                          <p className="text-white text-[13px] font-medium">{title}</p>
-                          <p className="text-white text-[11px] mt-0.5">{meta}</p>
+                          <p className="text-white text-[15px] font-medium">{title}</p>
+                          <p className="text-white text-[13px] mt-0.5">{meta}</p>
                         </div>
                       </div>
                     ))}
@@ -233,7 +234,7 @@
 
               {/* ══ RIGHT ═════════════════════════════════════════════════ */}
               <div className="lg:col-span-4 a3">
-                <h2 className="text-[11px] text-white uppercase tracking-[0.2em] mb-6">Past Work</h2>
+                <h2 className="text-[13px] text-white uppercase tracking-[0.2em] mb-6">Past Work</h2>
 
                 <ListItem
                   num="01"
@@ -265,11 +266,11 @@
 
                 {/* Blog */}
                 <div className="mt-8 pt-6 border-t border-[#111]" id="blog">
-                  <h2 className="text-[11px] text-white uppercase tracking-[0.2em] mb-4">Blog</h2>
-                  <p className="text-[12px] text-white leading-relaxed">
+                  <h2 className="text-[13px] text-white uppercase tracking-[0.2em] mb-4">Blog</h2>
+                  <p className="text-[14px] text-white leading-relaxed">
                     Writing on Generative AI, LLM system design, multi-agent architectures, and production lessons.
                   </p>
-                  <p className="text-[11px] text-white italic mt-2 leading-relaxed">
+                  <p className="text-[13px] text-white italic mt-2 leading-relaxed">
                     Coming soon — RAG pipelines · LangGraph patterns · LLM evaluation · AWS MLOps
                   </p>
                 </div>
@@ -279,7 +280,7 @@
 
             {/* Footer */}
             <div className="mt-10 pt-4 border-t border-[#111] a5">
-              <p className="text-[11px] text-white">© {new Date().getFullYear()} Rajeshwar Sehdev</p>
+              <p className="text-[13px] text-white">© {new Date().getFullYear()} Rajeshwar Sehdev</p>
             </div>
 
           </div>
