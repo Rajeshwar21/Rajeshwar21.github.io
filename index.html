@@ -13,34 +13,47 @@
       theme: {
         extend: {
           fontFamily: { mono: ['"JetBrains Mono"', 'monospace'] },
-          colors: { muted: '#888888' }
         }
       }
     }
   </script>
   <style>
-    * { cursor: default; }
+    * { box-sizing: border-box; margin: 0; padding: 0; cursor: default; }
     a, button { cursor: pointer !important; }
-    body { background: #000; overflow-x: hidden; color: #fff; }
-    * { color: inherit; }
-    .grayscale-img { filter: grayscale(100%); transition: filter 0.3s; }
-    .grayscale-img:hover { filter: none; }
-    .dotted { border-bottom: 1px dotted rgba(255,255,255,0.4); transition: border-color 0.2s; }
-    .dotted:hover { border-color: rgba(255,255,255,0.9); }
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #000; }
-    ::-webkit-scrollbar-thumb { background: #222; border-radius: 3px; }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
+    html, body { background: #0d1117; color: #ffffff; font-family: 'JetBrains Mono', monospace; }
+    /* thin teal top bar */
+    body::before {
+      content: '';
+      display: block;
+      height: 3px;
+      background: linear-gradient(90deg, #00bcd4, #0891b2, transparent);
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
     }
-    .a1 { animation: fadeUp 0.5s ease 0.1s both; }
-    .a2 { animation: fadeUp 0.5s ease 0.2s both; }
-    .a3 { animation: fadeUp 0.5s ease 0.3s both; }
-    .a5 { animation: fadeUp 0.5s ease 0.5s both; }
+    .grey  { color: #888888; }
+    .white { color: #ffffff; }
+    /* photo */
+    .photo-img { filter: grayscale(100%); transition: filter 0.3s; display: block; }
+    .photo-img:hover { filter: none; }
+    /* dotted underline for grey links */
+    .dotlink { color: #888; border-bottom: 1px dotted #555; transition: color .2s, border-color .2s; }
+    .dotlink:hover { color: #fff; border-bottom-color: #fff; }
+    /* section links (white with dotted) */
+    .wlink { color: #fff; border-bottom: 1px dotted #555; transition: border-color .2s; }
+    .wlink:hover { border-bottom-color: #fff; }
+    /* animations */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    .a1 { animation: fadeUp .45s ease .05s both; }
+    .a2 { animation: fadeUp .45s ease .15s both; }
+    .a3 { animation: fadeUp .45s ease .25s both; }
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0d1117; }
+    ::-webkit-scrollbar-thumb { background: #2d333b; border-radius: 3px; }
   </style>
 </head>
-<body class="bg-black text-white font-mono">
+<body>
   <div id="root"></div>
 
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
@@ -50,7 +63,7 @@
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
 
-    // ── ScrambleText ────────────────────────────────────────────────────────
+    /* ── ScrambleText ───────────────────────────────────────────────────── */
     const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     function ScrambleText({ text }) {
       const [out, setOut] = useState(text);
@@ -72,217 +85,240 @@
       return <span onMouseEnter={run}>{out}</span>;
     }
 
-    // ── Arrow ───────────────────────────────────────────────────────────────
-    function Arrow() {
+    /* ── Arrow ──────────────────────────────────────────────────────────── */
+    function Arr() {
       return (
-        <svg className="inline h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M7 17L17 7M17 7H7M17 7v10" />
+        <svg style={{display:'inline',width:'11px',height:'11px',marginLeft:'3px',verticalAlign:'middle',transition:'transform .2s'}}
+          className="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <path d="M7 17L17 7M17 7H7M17 7v10"/>
         </svg>
       );
     }
 
-    // ── SidebarLink ─────────────────────────────────────────────────────────
-    function SidebarLink({ href, children, download }) {
+    /* ── Left nav link (white + arrow, scramble) ────────────────────────── */
+    function NavLink({ href, children, download }) {
       const ext = href && href.startsWith('http');
       return (
         <a href={href} download={download||undefined}
-          target={ext ? '_blank' : undefined}
-          rel={ext ? 'noopener noreferrer' : undefined}
-          className="group flex items-center gap-1 text-white hover:text-white transition-colors text-[15px] w-fit"
+          target={ext?'_blank':undefined} rel={ext?'noopener noreferrer':undefined}
+          style={{display:'flex',alignItems:'center',gap:'2px',color:'#fff',
+                  borderBottom:'1px dotted #444',width:'fit-content',
+                  fontSize:'15px',lineHeight:'1.6',textDecoration:'none',
+                  transition:'border-color .2s'}}
+          onMouseEnter={e=>e.currentTarget.style.borderBottomColor='#fff'}
+          onMouseLeave={e=>e.currentTarget.style.borderBottomColor='#444'}
         >
-          <ScrambleText text={children} /><Arrow />
+          <ScrambleText text={children}/><Arr/>
         </a>
       );
     }
 
-    // ── ListItem ────────────────────────────────────────────────────────────
-    function ListItem({ num, title, company, href, date, bullets }) {
+    /* ── Experience item ────────────────────────────────────────────────── */
+    function Job({ num, title, company, href, date, bullets }) {
       return (
-        <div className="mb-7 last:mb-0">
-          <p className="text-white text-[13px] mb-0.5 tabular-nums">{num}</p>
-          <p className="text-[17px] leading-snug mb-0.5">
-            <span className="text-white font-medium">{title} </span>
+        <div style={{marginBottom:'36px'}}>
+          {/* number — grey */}
+          <p style={{color:'#555',fontSize:'13px',marginBottom:'6px',fontVariantNumeric:'tabular-nums'}}>{num}</p>
+          {/* title @ company — bold white */}
+          <p style={{fontSize:'16px',fontWeight:'700',color:'#fff',marginBottom:'8px',lineHeight:'1.4'}}>
+            {title} @{' '}
             <a href={href} target="_blank" rel="noopener noreferrer"
-              className="group text-white hover:text-white transition-colors inline-flex items-center gap-0.5">
-              @ <ScrambleText text={company} /><Arrow />
+              style={{color:'#fff',textDecoration:'none',borderBottom:'1px dotted #555',transition:'border-color .2s'}}
+              onMouseEnter={e=>e.currentTarget.style.borderBottomColor='#fff'}
+              onMouseLeave={e=>e.currentTarget.style.borderBottomColor='#555'}
+            >
+              <ScrambleText text={company}/><Arr/>
             </a>
           </p>
-          <p className="text-white text-[13px] italic mb-1.5">{date}</p>
-          <ul className="space-y-0.5">
-            {bullets.map((b, i) => (
-              <li key={i} className="text-white text-[14px] leading-relaxed">· {b}</li>
+          {/* bullets — grey */}
+          <ul style={{marginBottom:'6px',paddingLeft:'0',listStyle:'none'}}>
+            {bullets.map((b,i)=>(
+              <li key={i} style={{color:'#888',fontSize:'14px',lineHeight:'1.7',paddingLeft:'0'}}>
+                · {b}
+              </li>
             ))}
           </ul>
+          {/* date — grey italic */}
+          <p style={{color:'#888',fontSize:'13px',fontStyle:'italic'}}>{date}</p>
         </div>
       );
     }
 
-    // ── App ─────────────────────────────────────────────────────────────────
+    /* ── App ────────────────────────────────────────────────────────────── */
     function App() {
+      const col = {display:'flex',flexDirection:'column',gap:'0'};
       return (
-        <div className="min-h-screen py-8 px-6 md:px-12 lg:py-10 lg:px-16">
-          <div className="max-w-[1600px] mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        <div style={{minHeight:'100vh',padding:'48px 48px 48px 48px',maxWidth:'1600px',margin:'0 auto'}}>
+          <div style={{display:'grid',gridTemplateColumns:'280px 1fr 1fr',gap:'64px',alignItems:'start'}}>
 
-              {/* ══ LEFT ══════════════════════════════════════════════════ */}
-              <div className="lg:col-span-3 space-y-6 a1">
+            {/* ═══ LEFT ══════════════════════════════════════════════════ */}
+            <div className="a1" style={col}>
 
-                {/* Name + bio */}
-                <div>
-                  <h1 className="text-[28px] font-bold italic text-white mb-3 leading-tight">
-                    Rajeshwar Sehdev
-                  </h1>
-                  <div className="space-y-0.5">
-                    <p className="text-white text-[15px]">Senior AI/ML Engineer</p>
-                    <p className="text-white text-[15px]">India · Available immediately</p>
-                    <a href="mailto:rajeshwarsehdev@gmail.com"
-                      className="text-white text-[15px] hover:text-white transition-colors dotted inline-block mt-0.5">
-                      rajeshwarsehdev@gmail.com
-                    </a>
+              {/* Big italic title */}
+              <h1 style={{fontSize:'36px',fontWeight:'800',fontStyle:'italic',color:'#fff',
+                          marginBottom:'20px',lineHeight:'1.1',letterSpacing:'-0.5px'}}>
+                Rajeshwar Sehdev
+              </h1>
+
+              {/* Name bold */}
+              <p style={{fontSize:'17px',fontWeight:'700',color:'#fff',marginBottom:'4px'}}>
+                Senior AI/ML Engineer
+              </p>
+
+              {/* Location + email — grey */}
+              <p style={{fontSize:'14px',color:'#888',marginBottom:'2px'}}>India</p>
+              <a href="mailto:rajeshwarsehdev@gmail.com" className="dotlink"
+                style={{fontSize:'14px',marginBottom:'28px',display:'inline-block'}}>
+                rajeshwarsehdev@gmail.com
+              </a>
+
+              {/* Photo */}
+              <div style={{marginBottom:'28px'}}>
+                <img src="assets/photo.jpg" alt="Rajeshwar Sehdev"
+                  className="photo-img"
+                  style={{width:'220px',height:'280px',objectFit:'cover',objectPosition:'top'}}
+                  onError={e=>e.target.style.display='none'}
+                />
+              </div>
+
+              {/* ELSEWHERE label */}
+              <p style={{fontSize:'12px',color:'#555',textTransform:'uppercase',
+                         letterSpacing:'0.15em',marginBottom:'12px',fontWeight:'500'}}>
+                Elsewhere
+              </p>
+
+              {/* Nav links */}
+              <div style={{display:'flex',flexDirection:'column',gap:'8px'}}>
+                <NavLink href="assets/CV_Rajeshwar_Sehdev.pdf" download>CV</NavLink>
+                <NavLink href="#blog">Blog</NavLink>
+                <NavLink href="https://www.linkedin.com/in/rajeshwar-sehdev-290a98b7/">LinkedIn</NavLink>
+                <NavLink href="mailto:rajeshwarsehdev@gmail.com">Email</NavLink>
+              </div>
+
+            </div>
+
+            {/* ═══ CENTER — Recent Experience ════════════════════════════ */}
+            <div className="a2">
+              <h2 style={{fontSize:'13px',fontWeight:'600',color:'#fff',textTransform:'uppercase',
+                          letterSpacing:'0.18em',marginBottom:'32px'}}>
+                Recent Experience
+              </h2>
+
+              <Job num="01"
+                title="Senior Data Scientist"
+                company="Gartner"
+                href="https://www.gartner.com"
+                date="September 2024 – Present"
+                bullets={[
+                  'AI Research Assistant — multi-agent system (LangGraph + GPT-4o)',
+                  'Hybrid retrieval: OpenSearch BM25 + RRF re-ranking + Tavily web search',
+                  'Multi-tier LLM orchestration with confidence-gated routing',
+                  'LLM eval pipeline: correctness, consistency, data-security compliance',
+                  'Enterprise deployments on AWS SageMaker & Kubernetes',
+                ]}
+              />
+
+              <Job num="02"
+                title="Senior Data Scientist"
+                company="Iris Software"
+                href="https://www.irissoftware.com"
+                date="April 2023 – September 2024"
+                bullets={[
+                  'GenAI Table QnA (LangChain + LLaMA) — manual reporting cut by 40%',
+                  'RAG pipelines improving query accuracy by 25% for BFSI executives',
+                  'Document classification APIs (CNN + BERT) — errors down 35%',
+                  'FastAPI dashboards serving 100+ daily users',
+                ]}
+              />
+
+              {/* Skills */}
+              <div style={{marginTop:'16px',paddingTop:'28px',borderTop:'1px solid #21262d'}}>
+                <h2 style={{fontSize:'13px',fontWeight:'600',color:'#fff',textTransform:'uppercase',
+                            letterSpacing:'0.18em',marginBottom:'20px'}}>Skills</h2>
+                {[
+                  {cat:'LLM & Agents', list:'LangGraph · LangChain · GPT-4o · LLaMA · RAG · Agentic Workflows · Prompt Engineering'},
+                  {cat:'ML & Data',    list:'Python · PyTorch · Transformers · Scikit-learn · BERT · NLP · OpenCV'},
+                  {cat:'Cloud & Infra',list:'AWS SageMaker · Lambda · EKS · S3 · Docker · Kubernetes · OpenSearch'},
+                  {cat:'Apps',         list:'FastAPI · Streamlit · PostgreSQL · REST APIs'},
+                ].map(({cat,list})=>(
+                  <div key={cat} style={{marginBottom:'12px'}}>
+                    <p style={{fontSize:'12px',color:'#555',textTransform:'uppercase',letterSpacing:'0.12em',marginBottom:'3px'}}>{cat}</p>
+                    <p style={{fontSize:'13px',color:'#888',lineHeight:'1.7'}}>{list}</p>
                   </div>
-                </div>
+                ))}
+              </div>
+            </div>
 
-                {/* Photo */}
-                <div>
-                  <img
-                    src="assets/photo.jpg"
-                    alt="Rajeshwar Sehdev"
-                    className="grayscale-img w-[190px] h-[240px] object-cover object-top rounded-sm"
-                    onError={(e) => { e.target.style.display='none'; }}
-                  />
-                </div>
+            {/* ═══ RIGHT — Past Work ══════════════════════════════════════ */}
+            <div className="a3">
+              <h2 style={{fontSize:'13px',fontWeight:'600',color:'#fff',textTransform:'uppercase',
+                          letterSpacing:'0.18em',marginBottom:'32px'}}>
+                Past Work
+              </h2>
 
-                {/* Links */}
-                <div className="space-y-2.5">
-                  <SidebarLink href="assets/CV_Rajeshwar_Sehdev.pdf" download>CV</SidebarLink>
-                  <SidebarLink href="#blog">Blog</SidebarLink>
-                  <SidebarLink href="https://www.linkedin.com/in/rajeshwar-sehdev-290a98b7/">LinkedIn</SidebarLink>
-                  <SidebarLink href="mailto:rajeshwarsehdev@gmail.com">Email</SidebarLink>
-                </div>
+              <Job num="01"
+                title="Senior Data Scientist"
+                company="Gramener"
+                href="https://gramener.com"
+                date="August 2021 – April 2023"
+                bullets={[
+                  'NLP (topic modeling, sentiment analysis) for pharma & tourism clients',
+                  'Prompt engineering improving campaign targeting accuracy by 18%',
+                  'GenAI reporting automation for global stakeholders',
+                  'Data viz dashboards & APIs for strategic decision-making',
+                ]}
+              />
 
-                {/* Skills */}
-                <div className="pt-4 border-t border-[#111] space-y-3">
-                  <p className="text-[13px] text-white uppercase tracking-widest">Skills</p>
-                  {[
-                    { cat: 'LLM & Agents', list: 'LangGraph · LangChain · GPT-4o · LLaMA · RAG · Agentic Workflows' },
-                    { cat: 'ML & Data',    list: 'Python · PyTorch · Transformers · BERT · NLP · Scikit-learn' },
-                    { cat: 'Cloud',        list: 'AWS SageMaker · Lambda · EKS · Docker · Kubernetes · OpenSearch' },
-                    { cat: 'Apps',         list: 'FastAPI · Streamlit · PostgreSQL · REST APIs' },
-                  ].map(({ cat, list }) => (
-                    <div key={cat}>
-                      <p className="text-[12px] text-white uppercase tracking-wider mb-0.5">{cat}</p>
-                      <p className="text-[13px] text-white leading-relaxed">{list}</p>
+              <Job num="02"
+                title="Data Scientist"
+                company="Tata Consultancy Services"
+                href="https://www.tcs.com"
+                date="September 2016 – August 2021"
+                bullets={[
+                  'ML incident classification — misclassification reduced by 40%',
+                  'NLP ticket categorization cutting manual effort by 60%',
+                  'Automation workflows saving 500+ man-hours annually',
+                  'EDA & feature engineering on enterprise BFSI datasets',
+                ]}
+              />
+
+              {/* Certifications */}
+              <div style={{marginTop:'16px',paddingTop:'28px',borderTop:'1px solid #21262d'}}>
+                <h2 style={{fontSize:'13px',fontWeight:'600',color:'#fff',textTransform:'uppercase',
+                            letterSpacing:'0.18em',marginBottom:'20px'}}>Certifications & Education</h2>
+                {[
+                  {n:'01', t:'AWS Machine Learning Specialty', m:'Amazon Web Services · 2025'},
+                  {n:'02', t:'Applied AI & Machine Learning', m:'Professional Training Course'},
+                  {n:'03', t:'Bachelor of Computer Applications', m:'GGSIP University · Delhi · 2016'},
+                ].map(({n,t,m})=>(
+                  <div key={n} style={{display:'flex',gap:'16px',marginBottom:'16px'}}>
+                    <span style={{color:'#555',fontSize:'13px',width:'24px',flexShrink:'0',fontVariantNumeric:'tabular-nums'}}>{n}</span>
+                    <div>
+                      <p style={{color:'#fff',fontSize:'14px',fontWeight:'600'}}>{t}</p>
+                      <p style={{color:'#888',fontSize:'13px',marginTop:'2px'}}>{m}</p>
                     </div>
-                  ))}
-                </div>
-
-              </div>
-
-              {/* ══ CENTER ════════════════════════════════════════════════ */}
-              <div className="lg:col-span-4 a2">
-                <h2 className="text-[13px] text-white uppercase tracking-[0.2em] mb-6">Recent Experience</h2>
-
-                <ListItem
-                  num="01"
-                  title="Senior Data Scientist"
-                  company="Gartner"
-                  href="https://www.gartner.com"
-                  date="September 2024 – Present"
-                  bullets={[
-                    'AI Research Assistant — multi-agent system (LangGraph + GPT-4o)',
-                    'Hybrid retrieval: OpenSearch BM25 + RRF re-ranking + Tavily',
-                    'Multi-tier LLM orchestration with confidence-gated routing',
-                    'LLM eval pipeline: correctness, consistency, compliance',
-                    'Enterprise deployments on AWS SageMaker & Kubernetes',
-                  ]}
-                />
-
-                <ListItem
-                  num="02"
-                  title="Senior Data Scientist"
-                  company="Iris Software"
-                  href="https://www.irissoftware.com"
-                  date="April 2023 – September 2024"
-                  bullets={[
-                    'GenAI Table QnA (LangChain + LLaMA) — manual reporting cut by 40%',
-                    'RAG pipelines improving query accuracy by 25% for BFSI execs',
-                    'Document classification APIs (CNN + BERT) — errors down 35%',
-                    'FastAPI dashboards serving 100+ daily users',
-                  ]}
-                />
-
-                {/* Certifications */}
-                <div className="mt-8 pt-6 border-t border-[#111]">
-                  <h2 className="text-[13px] text-white uppercase tracking-[0.2em] mb-5">Certifications & Education</h2>
-                  <div className="space-y-4">
-                    {[
-                      { n: '01', title: 'AWS Machine Learning Specialty', meta: 'Amazon Web Services · 2025' },
-                      { n: '02', title: 'Applied AI & Machine Learning', meta: 'Professional Training' },
-                      { n: '03', title: 'Bachelor of Computer Applications', meta: 'GGSIP University · Delhi · 2016' },
-                    ].map(({ n, title, meta }) => (
-                      <div key={n} className="flex gap-4">
-                        <span className="text-white text-[13px] w-5 flex-shrink-0 tabular-nums pt-0.5">{n}</span>
-                        <div>
-                          <p className="text-white text-[15px] font-medium">{title}</p>
-                          <p className="text-white text-[13px] mt-0.5">{meta}</p>
-                        </div>
-                      </div>
-                    ))}
                   </div>
-                </div>
+                ))}
               </div>
 
-              {/* ══ RIGHT ═════════════════════════════════════════════════ */}
-              <div className="lg:col-span-4 a3">
-                <h2 className="text-[13px] text-white uppercase tracking-[0.2em] mb-6">Past Work</h2>
-
-                <ListItem
-                  num="01"
-                  title="Senior Data Scientist"
-                  company="Gramener"
-                  href="https://gramener.com"
-                  date="August 2021 – April 2023"
-                  bullets={[
-                    'NLP (topic modeling, sentiment analysis) for pharma & tourism clients',
-                    'Prompt engineering improving targeting accuracy by 18%',
-                    'GenAI reporting automation for global stakeholders',
-                    'Data viz dashboards & APIs for strategic decision-making',
-                  ]}
-                />
-
-                <ListItem
-                  num="02"
-                  title="Data Scientist"
-                  company="Tata Consultancy Services"
-                  href="https://www.tcs.com"
-                  date="September 2016 – August 2021"
-                  bullets={[
-                    'ML incident classification — misclassification down 40%',
-                    'NLP ticket categorization cutting manual effort by 60%',
-                    'Automation workflows saving 500+ man-hours annually',
-                    'EDA & feature engineering on enterprise BFSI datasets',
-                  ]}
-                />
-
-                {/* Blog */}
-                <div className="mt-8 pt-6 border-t border-[#111]" id="blog">
-                  <h2 className="text-[13px] text-white uppercase tracking-[0.2em] mb-4">Blog</h2>
-                  <p className="text-[14px] text-white leading-relaxed">
-                    Writing on Generative AI, LLM system design, multi-agent architectures, and production lessons.
-                  </p>
-                  <p className="text-[13px] text-white italic mt-2 leading-relaxed">
-                    Coming soon — RAG pipelines · LangGraph patterns · LLM evaluation · AWS MLOps
-                  </p>
-                </div>
+              {/* Blog */}
+              <div id="blog" style={{marginTop:'16px',paddingTop:'28px',borderTop:'1px solid #21262d'}}>
+                <h2 style={{fontSize:'13px',fontWeight:'600',color:'#fff',textTransform:'uppercase',
+                            letterSpacing:'0.18em',marginBottom:'14px'}}>Blog</h2>
+                <p style={{fontSize:'14px',color:'#888',lineHeight:'1.8'}}>
+                  Writing on Generative AI, LLM system design, multi-agent architectures, and production lessons.
+                </p>
+                <p style={{fontSize:'13px',color:'#555',fontStyle:'italic',marginTop:'8px',lineHeight:'1.7'}}>
+                  Coming soon — RAG pipelines · LangGraph patterns · LLM evaluation · AWS MLOps
+                </p>
               </div>
 
             </div>
+          </div>
 
-            {/* Footer */}
-            <div className="mt-10 pt-4 border-t border-[#111] a5">
-              <p className="text-[13px] text-white">© {new Date().getFullYear()} Rajeshwar Sehdev</p>
-            </div>
-
+          {/* Footer */}
+          <div style={{marginTop:'56px',paddingTop:'16px',borderTop:'1px solid #21262d'}}>
+            <p style={{fontSize:'13px',color:'#555'}}>© {new Date().getFullYear()} Rajeshwar Sehdev</p>
           </div>
         </div>
       );
