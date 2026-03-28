@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rajeshwar Sehdev — Senior AI/ML Engineer</title>
+  <meta name="description" content="Senior AI/ML Engineer specializing in Generative AI, LLMs, multi-agent systems, and cloud deployments." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">RS</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="assets/CV_Rajeshwar_Sehdev.pdf" download class="btn btn-outline nav-cta">Download CV</a>
+      <button class="nav-toggle" aria-label="Toggle menu" onclick="toggleMenu()">&#9776;</button>
+    </div>
+    <ul class="nav-mobile" id="navMobile">
+      <li><a href="#about" onclick="closeMenu()">About</a></li>
+      <li><a href="#skills" onclick="closeMenu()">Skills</a></li>
+      <li><a href="#experience" onclick="closeMenu()">Experience</a></li>
+      <li><a href="#certifications" onclick="closeMenu()">Certifications</a></li>
+      <li><a href="#blog" onclick="closeMenu()">Blog</a></li>
+      <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+      <li><a href="assets/CV_Rajeshwar_Sehdev.pdf" download>Download CV</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content">
+      <div class="hero-avatar">
+        <div class="avatar-placeholder">RS</div>
+      </div>
+      <p class="hero-greeting">Hi, I'm</p>
+      <h1 class="hero-name">Rajeshwar Sehdev</h1>
+      <p class="hero-title">
+        <span class="typed-text" id="typedText"></span><span class="cursor">|</span>
+      </p>
+      <p class="hero-summary">
+        Senior Applied AI Engineer with <strong>9+ years</strong> building end-to-end GenAI systems —
+        multi-agent architectures, RAG pipelines, LLM orchestration, guardrails, and enterprise cloud deployments.
+      </p>
+      <div class="hero-actions">
+        <a href="#experience" class="btn btn-primary">View Experience</a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+      </div>
+      <div class="hero-socials">
+        <a href="https://www.linkedin.com/in/rajeshwar-sehdev-290a98b7/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        </a>
+        <a href="mailto:rajeshwarsehdev@gmail.com" aria-label="Email">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg>
+        </a>
+      </div>
+    </div>
+    <a href="#about" class="scroll-down" aria-label="Scroll down">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </a>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">About <span>Me</span></h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            I'm a Senior AI/ML Engineer based in India, specializing in <strong>Generative AI</strong> and production-grade
+            LLM systems. Over 9+ years I've worked across BFSI, pharma, consulting, and enterprise tech — translating
+            cutting-edge research into scalable, business-ready products.
+          </p>
+          <p>
+            My core strength is architecting <strong>multi-agent systems</strong> with LangGraph, building hybrid
+            retrieval pipelines (RAG + BM25 + RRF), and engineering robust LLM orchestration layers with guardrails and
+            evaluation frameworks.
+          </p>
+          <p>
+            Currently at <strong>Gartner</strong>, I lead the AI Research Assistant platform — an agentic system that
+            replaces hours of manual research with on-demand, source-cited workflows powered by GPT-4o.
+          </p>
+        </div>
+        <div class="about-stats">
+          <div class="stat-card">
+            <span class="stat-number">9+</span>
+            <span class="stat-label">Years of Experience</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">4</span>
+            <span class="stat-label">Companies</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">LLMs</span>
+            <span class="stat-label">Primary Focus</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">AWS</span>
+            <span class="stat-label">ML Certified</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">Technical <span>Skills</span></h2>
+      <div class="skills-grid">
+
+        <div class="skill-group">
+          <div class="skill-group-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3>Programming & Data Science</h3>
+          <div class="skill-tags">
+            <span class="tag">Python</span>
+            <span class="tag">PyTorch</span>
+            <span class="tag">Transformers</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">NumPy</span>
+            <span class="tag">Scikit-learn</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          </div>
+          <h3>ML & LLM Technologies</h3>
+          <div class="skill-tags">
+            <span class="tag tag-accent">Agentic Workflows</span>
+            <span class="tag tag-accent">LangGraph</span>
+            <span class="tag tag-accent">LangChain</span>
+            <span class="tag tag-accent">RAG</span>
+            <span class="tag tag-accent">OpenAI API</span>
+            <span class="tag tag-accent">GPT-4o</span>
+            <span class="tag tag-accent">LLaMA</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <h3>Cloud & MLOps</h3>
+          <div class="skill-tags">
+            <span class="tag">AWS SageMaker</span>
+            <span class="tag">Lambda</span>
+            <span class="tag">EKS</span>
+            <span class="tag">S3</span>
+            <span class="tag">API Gateway</span>
+            <span class="tag">Docker</span>
+            <span class="tag">Kubernetes</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          </div>
+          <h3>Application & Databases</h3>
+          <div class="skill-tags">
+            <span class="tag">FastAPI</span>
+            <span class="tag">Streamlit</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">OpenSearch</span>
+            <span class="tag">REST APIs</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <h2 class="section-title">Work <span>Experience</span></h2>
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <div>
+                <h3 class="job-title">Senior Data Scientist</h3>
+                <p class="company">Gartner <span class="location">· Gurgaon, India</span></p>
+              </div>
+              <span class="job-date">Sep 2024 – Present</span>
+            </div>
+            <ul class="job-bullets">
+              <li>Architected and shipped <strong>AI Research Assistant Tool</strong> — a production multi-agent research automation system using LangGraph and GPT-4o/GPT-5, replacing hours of manual research with on-demand agentic workflows.</li>
+              <li>Built a hybrid retrieval pipeline combining <strong>vector + lexical search on OpenSearch</strong> (BM25 + RRF re-ranking) with Tavily web search, routing queries intelligently across internal knowledge bases and live web sources.</li>
+              <li>Engineered a multi-tier LLM orchestration layer with intent classification, clarification nodes, and confidence-gated routing to reduce hallucinations and ensure grounded, source-cited responses at enterprise scale.</li>
+              <li>Built an LLM validation & evaluation pipeline scoring correctness, consistency, business-rule alignment, and data-security compliance.</li>
+              <li>Delivered enterprise AI deployments on AWS SageMaker and Kubernetes with international consulting teams.</li>
+            </ul>
+            <div class="job-tags">
+              <span class="tag tag-sm">LangGraph</span><span class="tag tag-sm">GPT-4o</span><span class="tag tag-sm">OpenSearch</span><span class="tag tag-sm">AWS SageMaker</span><span class="tag tag-sm">Multi-agent</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <div>
+                <h3 class="job-title">Senior Data Scientist</h3>
+                <p class="company">Iris Software <span class="location">· BFSI Domain · Noida, India</span></p>
+              </div>
+              <span class="job-date">Apr 2023 – Sep 2024</span>
+            </div>
+            <ul class="job-bullets">
+              <li>Delivered a <strong>Generative AI Table QnA system</strong> using LangChain & LLaMA, reducing manual reporting time by 40%.</li>
+              <li>Designed and deployed RAG pipelines, improving query accuracy by 25% and accelerating financial insights.</li>
+              <li>Developed document quality and classification APIs using CNNs, OpenCV, and BERT — reducing data processing errors by 35%.</li>
+              <li>Built and deployed FastAPIs and dashboards serving <strong>100+ daily users</strong>.</li>
+              <li>Conducted statistical analysis and anomaly detection on BFSI datasets, improving compliance efficiency by 20%.</li>
+            </ul>
+            <div class="job-tags">
+              <span class="tag tag-sm">LangChain</span><span class="tag tag-sm">LLaMA</span><span class="tag tag-sm">RAG</span><span class="tag tag-sm">BERT</span><span class="tag tag-sm">FastAPI</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <div>
+                <h3 class="job-title">Senior Data Scientist</h3>
+                <p class="company">Gramener <span class="location">· Remote</span></p>
+              </div>
+              <span class="job-date">Aug 2021 – Apr 2023</span>
+            </div>
+            <ul class="job-bullets">
+              <li>Delivered AI/ML solutions for pharma and tourism clients — NLP (topic modeling, sentiment analysis) and prompt engineering, improving marketing campaign targeting accuracy by 18%.</li>
+              <li>Designed and deployed data visualization dashboards and APIs for global stakeholders.</li>
+              <li>Implemented Generative AI techniques to automate reporting workflows and enrich data-driven recommendations.</li>
+            </ul>
+            <div class="job-tags">
+              <span class="tag tag-sm">NLP</span><span class="tag tag-sm">Sentiment Analysis</span><span class="tag tag-sm">Prompt Engineering</span><span class="tag tag-sm">GenAI</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <div>
+                <h3 class="job-title">Data Scientist</h3>
+                <p class="company">Tata Consultancy Services <span class="location">· BFSI & Manufacturing · Gurgaon, India</span></p>
+              </div>
+              <span class="job-date">Sep 2016 – Aug 2021</span>
+            </div>
+            <ul class="job-bullets">
+              <li>Built and deployed ML-based incident classification and routing models, reducing ticket misclassification by 40%.</li>
+              <li>Automated ticket categorization with NLP, cutting manual effort by 60%.</li>
+              <li>Developed automation workflows saving <strong>500+ man-hours annually</strong>.</li>
+              <li>Conducted EDA, feature engineering, and NLP on enterprise datasets to improve risk management and compliance.</li>
+            </ul>
+            <div class="job-tags">
+              <span class="tag tag-sm">ML</span><span class="tag tag-sm">NLP</span><span class="tag tag-sm">Python</span><span class="tag tag-sm">Automation</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS & EDUCATION -->
+  <section id="certifications">
+    <div class="container">
+      <h2 class="section-title">Certifications & <span>Education</span></h2>
+      <div class="cert-edu-grid">
+
+        <div class="cert-edu-col">
+          <h3 class="sub-heading">Certifications</h3>
+          <div class="cert-card">
+            <div class="cert-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 15l-3 6 3-1.5 3 1.5-3-6z"/><circle cx="12" cy="9" r="5"/></svg>
+            </div>
+            <div>
+              <p class="cert-title">AWS Machine Learning Specialty</p>
+              <p class="cert-meta">Amazon Web Services · 2025</p>
+            </div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 15l-3 6 3-1.5 3 1.5-3-6z"/><circle cx="12" cy="9" r="5"/></svg>
+            </div>
+            <div>
+              <p class="cert-title">Applied AI & Machine Learning</p>
+              <p class="cert-meta">Professional Training Course</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cert-edu-col">
+          <h3 class="sub-heading">Education</h3>
+          <div class="cert-card">
+            <div class="cert-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            </div>
+            <div>
+              <p class="cert-title">Bachelor of Computer Applications</p>
+              <p class="cert-meta">Guru Gobind Singh Indraprastha University · Delhi · 2016</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog">
+    <div class="container">
+      <h2 class="section-title">Blog <span>&amp; Writing</span></h2>
+      <div class="blog-coming-soon">
+        <div class="blog-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </div>
+        <h3>Posts coming soon</h3>
+        <p>I'll be writing about Generative AI, LLM system design, multi-agent architectures, and lessons learned from production deployments.</p>
+        <p class="blog-topics">Topics to expect: <span>RAG pipelines</span> · <span>LangGraph patterns</span> · <span>LLM evaluation</span> · <span>AWS MLOps</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Get In <span>Touch</span></h2>
+      <p class="contact-intro">Open to interesting AI/ML roles, collaborations, and consulting engagements.</p>
+      <div class="contact-cards">
+        <a href="mailto:rajeshwarsehdev@gmail.com" class="contact-card">
+          <div class="contact-card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg>
+          </div>
+          <div>
+            <p class="contact-label">Email</p>
+            <p class="contact-value">rajeshwarsehdev@gmail.com</p>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/rajeshwar-sehdev-290a98b7/" target="_blank" rel="noopener" class="contact-card">
+          <div class="contact-card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          </div>
+          <div>
+            <p class="contact-label">LinkedIn</p>
+            <p class="contact-value">rajeshwar-sehdev</p>
+          </div>
+        </a>
+        <div class="contact-card no-link">
+          <div class="contact-card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <p class="contact-label">Location</p>
+            <p class="contact-value">India · Available Immediately</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-inner">
+      <p>© 2026 Rajeshwar Sehdev. Built with plain HTML/CSS/JS.</p>
+      <div class="footer-links">
+        <a href="https://www.linkedin.com/in/rajeshwar-sehdev-290a98b7/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:rajeshwarsehdev@gmail.com">Email</a>
+        <a href="assets/CV_Rajeshwar_Sehdev.pdf" download>CV</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
