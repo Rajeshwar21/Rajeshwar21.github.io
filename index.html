@@ -5,232 +5,305 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rajeshwar x AI</title>
   <meta name="description" content="Rajeshwar Sehdev — Senior AI/ML Engineer specializing in Generative AI, LLMs, and multi-agent systems." />
-  <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { mono: ['"JetBrains Mono"', 'monospace'] },
+          colors: { background: '#000000', muted: '#888888', accent: '#ffffff' }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { cursor: default; }
+    a, button { cursor: pointer !important; }
+    body { background: #000; }
+    .image-grayscale { filter: grayscale(100%); transition: filter 0.3s ease; }
+    .image-grayscale:hover { filter: none; }
+    .link-underline { border-bottom: 1px dotted rgba(255,255,255,0.25); }
+    .link-underline:hover { border-bottom-color: rgba(255,255,255,0.7); }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: #222; border-radius: 4px; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .anim { opacity: 0; animation: fadeUp 0.5s ease forwards; }
+    .anim-1 { animation-delay: 0.1s; }
+    .anim-2 { animation-delay: 0.2s; }
+    .anim-3 { animation-delay: 0.3s; }
+    .anim-4 { animation-delay: 0.4s; }
+    .anim-5 { animation-delay: 0.5s; }
+    .anim-6 { animation-delay: 0.6s; }
+  </style>
 </head>
-<body>
+<body class="bg-black text-white font-mono min-h-screen">
+  <div id="root"></div>
 
-  <!-- LEFT SIDEBAR -->
-  <aside class="sidebar">
-    <nav class="sidebar-nav">
-      <a href="assets/CV_Rajeshwar_Sehdev.pdf" download class="sidebar-link">CV</a>
-      <a href="#blog" class="sidebar-link">Blog</a>
-      <a href="https://www.linkedin.com/in/rajeshwar-sehdev-290a98b7/" target="_blank" rel="noopener" class="sidebar-link">LinkedIn</a>
-      <a href="mailto:rajeshwarsehdev@gmail.com" class="sidebar-link">Email</a>
-    </nav>
-  </aside>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <!-- MAIN -->
-  <main class="main">
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
 
-    <!-- HEADER -->
-    <header class="site-header">
-      <div class="header-left">
-        <h1 class="big-title">Rajeshwar <span class="x-ai">x AI</span></h1>
-        <div class="header-meta">
-          <p class="full-name">Rajeshwar Sehdev</p>
-          <p class="role">Senior AI/ML Engineer</p>
-          <p class="meta-line">India</p>
-          <p class="meta-line">
-            <a href="mailto:rajeshwarsehdev@gmail.com">rajeshwarsehdev@gmail.com</a>
+    const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    function ScrambleText({ text }) {
+      const [display, setDisplay] = useState(text);
+      const timer = useRef(null);
+
+      const scramble = () => {
+        let i = 0;
+        clearInterval(timer.current);
+        timer.current = setInterval(() => {
+          setDisplay(
+            text.split('').map((ch, idx) => {
+              if (ch === ' ') return ' ';
+              if (idx < i) return text[idx];
+              return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+            }).join('')
+          );
+          i += 0.6;
+          if (i > text.length) {
+            clearInterval(timer.current);
+            setDisplay(text);
+          }
+        }, 30);
+      };
+
+      useEffect(() => () => clearInterval(timer.current), []);
+      return <span onMouseEnter={scramble}>{display}</span>;
+    }
+
+    function Arrow() {
+      return (
+        <svg className="inline h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M7 17L17 7M17 7H7M17 7v10" />
+        </svg>
+      );
+    }
+
+    function SidebarLink({ href, children, download }) {
+      const isExternal = typeof href === 'string' && href.startsWith('http');
+      return (
+        <a
+          href={href}
+          download={download || undefined}
+          target={isExternal ? '_blank' : undefined}
+          rel={isExternal ? 'noopener noreferrer' : undefined}
+          className="group flex items-center gap-1.5 text-[#888] hover:text-white transition-colors duration-200 text-xs w-fit"
+        >
+          <ScrambleText text={children} />
+          <Arrow />
+        </a>
+      );
+    }
+
+    function ListItem({ num, title, company, href, date, bullets }) {
+      return (
+        <div className="mb-9 last:mb-0">
+          <p className="text-[#444] text-xs mb-1 tabular-nums">{num}</p>
+          <p className="text-sm leading-snug mb-1">
+            <span className="text-white font-medium">{title} </span>
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group text-[#888] hover:text-white transition-colors inline-flex items-center gap-0.5"
+            >
+              @ <ScrambleText text={company} /><Arrow />
+            </a>
           </p>
-          <p class="meta-line">
-            <a href="https://www.linkedin.com/in/rajeshwar-sehdev-290a98b7/" target="_blank" rel="noopener">linkedin.com/in/rajeshwar-sehdev</a>
-          </p>
+          <p className="text-[#555] text-xs italic mb-2">{date}</p>
+          <ul className="space-y-1">
+            {bullets.map((b, i) => (
+              <li key={i} className="text-[#888] text-xs leading-relaxed">· {b}</li>
+            ))}
+          </ul>
         </div>
-      </div>
-      <div class="header-photo">
-        <div class="photo-placeholder">RS</div>
-        <!-- Replace above with: <img src="assets/photo.jpg" alt="Rajeshwar Sehdev" /> -->
-      </div>
-    </header>
+      );
+    }
 
-    <hr class="divider" />
+    function App() {
+      return (
+        <div className="min-h-screen py-10 px-6 md:px-12 lg:py-12">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
 
-    <!-- SUMMARY -->
-    <section class="summary-section">
-      <p class="summary-text">
-        Senior Applied AI Engineer with <strong>9+ years</strong> building end-to-end GenAI systems —
-        multi-agent architectures, hybrid RAG pipelines, LLM orchestration, guardrails, evaluation,
-        and enterprise cloud deployments. Currently leading AI Research automation at Gartner.
-      </p>
-    </section>
+              {/* ── LEFT ── */}
+              <div className="lg:col-span-4 space-y-8">
 
-    <hr class="divider" />
+                <div className="anim anim-1">
+                  <h1 className="text-4xl md:text-5xl font-bold italic leading-none text-white mb-5">
+                    Rajeshwar x AI
+                  </h1>
+                  <div className="space-y-0.5">
+                    <p className="text-white text-sm font-medium">Rajeshwar Sehdev</p>
+                    <p className="text-[#888] text-xs">Senior AI/ML Engineer</p>
+                    <p className="text-[#888] text-xs">India</p>
+                    <a href="mailto:rajeshwarsehdev@gmail.com" className="text-[#888] text-xs hover:text-white transition-colors link-underline inline-block mt-0.5">
+                      rajeshwarsehdev@gmail.com
+                    </a>
+                  </div>
+                </div>
 
-    <!-- EXPERIENCE GRID -->
-    <section class="experience-section">
-      <div class="exp-col">
-        <h2 class="col-heading">RECENT EXPERIENCE</h2>
+                <div className="anim anim-2">
+                  {/* Photo — replace div with img tag once you have a photo */}
+                  <div className="image-grayscale w-[200px] h-[256px] bg-[#0f0f0f] border border-[#1a1a1a] flex items-center justify-center text-[#333] text-3xl font-bold italic rounded-sm select-none">
+                    RS
+                  </div>
+                  {/* <img src="assets/photo.jpg" alt="Rajeshwar Sehdev" className="image-grayscale w-[200px] h-[256px] object-cover rounded-sm" /> */}
+                </div>
 
-        <div class="exp-item">
-          <div class="exp-num">01</div>
-          <div class="exp-body">
-            <p class="exp-title">
-              Senior Data Scientist
-              <span class="exp-at">@ Gartner
-                <span class="arrow">↗</span>
-              </span>
-            </p>
-            <p class="exp-date">September 2024 – Present</p>
-            <ul class="exp-bullets">
-              <li>Architected AI Research Assistant — production multi-agent system using LangGraph + GPT-4o</li>
-              <li>Hybrid retrieval: OpenSearch BM25 + RRF re-ranking + Tavily web search</li>
-              <li>Multi-tier LLM orchestration with intent classification and confidence-gated routing</li>
-              <li>LLM evaluation pipeline: correctness, consistency, data-security compliance</li>
-              <li>Enterprise deployments on AWS SageMaker and Kubernetes</li>
-            </ul>
+                <div className="anim anim-3 space-y-3">
+                  <SidebarLink href="assets/CV_Rajeshwar_Sehdev.pdf" download>CV</SidebarLink>
+                  <SidebarLink href="#blog">Blog</SidebarLink>
+                  <SidebarLink href="https://www.linkedin.com/in/rajeshwar-sehdev-290a98b7/">LinkedIn</SidebarLink>
+                  <SidebarLink href="mailto:rajeshwarsehdev@gmail.com">Email</SidebarLink>
+                </div>
+
+              </div>
+
+              {/* ── CENTER ── */}
+              <div className="lg:col-span-4">
+
+                <div className="anim anim-2">
+                  <h2 className="text-[10px] text-[#555] uppercase tracking-[0.2em] mb-8">Recent Experience</h2>
+
+                  <ListItem
+                    num="01"
+                    title="Senior Data Scientist"
+                    company="Gartner"
+                    href="https://www.gartner.com"
+                    date="September 2024 – Present"
+                    bullets={[
+                      'AI Research Assistant — multi-agent system (LangGraph + GPT-4o)',
+                      'Hybrid retrieval: OpenSearch BM25 + RRF re-ranking + Tavily web search',
+                      'Multi-tier LLM orchestration with confidence-gated routing',
+                      'LLM eval pipeline: correctness, consistency, compliance',
+                      'Enterprise deployments on AWS SageMaker & Kubernetes',
+                    ]}
+                  />
+
+                  <ListItem
+                    num="02"
+                    title="Senior Data Scientist"
+                    company="Iris Software"
+                    href="https://www.irissoftware.com"
+                    date="April 2023 – September 2024"
+                    bullets={[
+                      'GenAI Table QnA (LangChain + LLaMA) — cut manual reporting by 40%',
+                      'RAG pipelines improving query accuracy by 25% for BFSI execs',
+                      'Document classification APIs (CNN + BERT) — errors down 35%',
+                      'FastAPI dashboards serving 100+ daily users',
+                    ]}
+                  />
+                </div>
+
+                <div className="anim anim-3 mt-10 pt-8 border-t border-[#111]">
+                  <h2 className="text-[10px] text-[#555] uppercase tracking-[0.2em] mb-6">Skills</h2>
+                  <div className="space-y-4">
+                    {[
+                      { cat: 'LLM & Agents', list: 'LangGraph · LangChain · GPT-4o · LLaMA · RAG · Agentic Workflows · Prompt Engineering' },
+                      { cat: 'ML & Data',    list: 'Python · PyTorch · Transformers · Scikit-learn · BERT · NLP · OpenCV' },
+                      { cat: 'Cloud & Infra',list: 'AWS SageMaker · Lambda · EKS · S3 · Docker · Kubernetes · OpenSearch' },
+                      { cat: 'Apps',         list: 'FastAPI · Streamlit · PostgreSQL · REST APIs' },
+                    ].map(({ cat, list }) => (
+                      <div key={cat}>
+                        <p className="text-[10px] text-[#444] uppercase tracking-widest mb-1">{cat}</p>
+                        <p className="text-xs text-[#888] leading-relaxed">{list}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+
+              {/* ── RIGHT ── */}
+              <div className="lg:col-span-4">
+
+                <div className="anim anim-3">
+                  <h2 className="text-[10px] text-[#555] uppercase tracking-[0.2em] mb-8">Past Work</h2>
+
+                  <ListItem
+                    num="01"
+                    title="Senior Data Scientist"
+                    company="Gramener"
+                    href="https://gramener.com"
+                    date="August 2021 – April 2023"
+                    bullets={[
+                      'NLP (topic modeling, sentiment analysis) for pharma & tourism',
+                      'Prompt engineering improving targeting accuracy by 18%',
+                      'GenAI reporting automation for global stakeholders',
+                      'Data viz dashboards and APIs for strategic decision-making',
+                    ]}
+                  />
+
+                  <ListItem
+                    num="02"
+                    title="Data Scientist"
+                    company="Tata Consultancy Services"
+                    href="https://www.tcs.com"
+                    date="September 2016 – August 2021"
+                    bullets={[
+                      'ML incident classification — reduced misclassification by 40%',
+                      'NLP ticket categorization cutting manual effort by 60%',
+                      'Automation workflows saving 500+ man-hours annually',
+                      'EDA & feature engineering on enterprise BFSI datasets',
+                    ]}
+                  />
+                </div>
+
+                <div className="anim anim-4 mt-10 pt-8 border-t border-[#111]" id="blog">
+                  <h2 className="text-[10px] text-[#555] uppercase tracking-[0.2em] mb-6">Blog</h2>
+                  <p className="text-xs text-[#888] leading-relaxed">
+                    Writing on Generative AI, LLM system design, multi-agent architectures, and production lessons.
+                  </p>
+                  <p className="text-xs text-[#444] italic mt-3 leading-relaxed">
+                    Coming soon — RAG pipelines · LangGraph patterns · LLM evaluation · AWS MLOps
+                  </p>
+                </div>
+
+                <div className="anim anim-5 mt-10 pt-8 border-t border-[#111]">
+                  <h2 className="text-[10px] text-[#555] uppercase tracking-[0.2em] mb-6">Certifications & Education</h2>
+                  <div className="space-y-5">
+                    {[
+                      { n: '01', title: 'AWS Machine Learning Specialty', meta: 'Amazon Web Services · 2025' },
+                      { n: '02', title: 'Applied AI & Machine Learning', meta: 'Professional Training Course' },
+                      { n: '03', title: 'Bachelor of Computer Applications', meta: 'GGSIP University · Delhi · 2016' },
+                    ].map(({ n, title, meta }) => (
+                      <div key={n} className="flex gap-4">
+                        <span className="text-[#333] text-xs w-5 flex-shrink-0 tabular-nums pt-0.5">{n}</span>
+                        <div>
+                          <p className="text-white text-xs font-medium">{title}</p>
+                          <p className="text-[#888] text-xs mt-0.5">{meta}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* FOOTER */}
+            <div className="mt-16 pt-6 border-t border-[#111] anim anim-6">
+              <p className="text-xs text-[#333]">© {new Date().getFullYear()} Rajeshwar Sehdev</p>
+            </div>
+
           </div>
         </div>
+      );
+    }
 
-        <div class="exp-item">
-          <div class="exp-num">02</div>
-          <div class="exp-body">
-            <p class="exp-title">
-              Senior Data Scientist
-              <span class="exp-at">@ Iris Software
-                <span class="arrow">↗</span>
-              </span>
-            </p>
-            <p class="exp-date">April 2023 – September 2024</p>
-            <ul class="exp-bullets">
-              <li>GenAI Table QnA using LangChain & LLaMA — cut manual reporting time by 40%</li>
-              <li>RAG pipelines improving query accuracy by 25% for BFSI executives</li>
-              <li>Document classification APIs (CNN + BERT) — reduced errors by 35%</li>
-              <li>FastAPI dashboards serving 100+ daily users</li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="exp-col">
-        <h2 class="col-heading">PAST WORK</h2>
-
-        <div class="exp-item">
-          <div class="exp-num">01</div>
-          <div class="exp-body">
-            <p class="exp-title">
-              Senior Data Scientist
-              <span class="exp-at">@ Gramener
-                <span class="arrow">↗</span>
-              </span>
-            </p>
-            <p class="exp-date">August 2021 – April 2023</p>
-            <ul class="exp-bullets">
-              <li>NLP (topic modeling, sentiment analysis) for pharma and tourism clients</li>
-              <li>Prompt engineering improving marketing targeting accuracy by 18%</li>
-              <li>GenAI-powered reporting automation for global stakeholders</li>
-              <li>Data visualization dashboards and APIs for strategic decision-making</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="exp-item">
-          <div class="exp-num">02</div>
-          <div class="exp-body">
-            <p class="exp-title">
-              Data Scientist
-              <span class="exp-at">@ Tata Consultancy Services
-                <span class="arrow">↗</span>
-              </span>
-            </p>
-            <p class="exp-date">September 2016 – August 2021</p>
-            <ul class="exp-bullets">
-              <li>ML-based incident classification — reduced misclassification by 40%</li>
-              <li>NLP ticket categorization cutting manual effort by 60%</li>
-              <li>Automation workflows saving 500+ man-hours annually</li>
-              <li>EDA, feature engineering, NLP on enterprise BFSI datasets</li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <hr class="divider" />
-
-    <!-- SKILLS -->
-    <section class="skills-section">
-      <h2 class="col-heading">SKILLS &amp; TOOLS</h2>
-      <div class="skills-grid">
-        <div class="skill-block">
-          <p class="skill-cat">LLM &amp; Agents</p>
-          <p class="skill-list">LangGraph · LangChain · GPT-4o · LLaMA · OpenAI API · Agentic Workflows · RAG · Prompt Engineering</p>
-        </div>
-        <div class="skill-block">
-          <p class="skill-cat">ML &amp; Data</p>
-          <p class="skill-list">Python · PyTorch · Transformers · Scikit-learn · Pandas · NumPy · BERT · CNNs · NLP</p>
-        </div>
-        <div class="skill-block">
-          <p class="skill-cat">Cloud &amp; Infra</p>
-          <p class="skill-list">AWS SageMaker · Lambda · EKS · S3 · API Gateway · Docker · Kubernetes · OpenSearch</p>
-        </div>
-        <div class="skill-block">
-          <p class="skill-cat">Applications</p>
-          <p class="skill-list">FastAPI · Streamlit · PostgreSQL · REST APIs</p>
-        </div>
-      </div>
-    </section>
-
-    <hr class="divider" />
-
-    <!-- CERTIFICATIONS -->
-    <section class="cert-section">
-      <h2 class="col-heading">CERTIFICATIONS &amp; EDUCATION</h2>
-      <div class="cert-grid">
-        <div class="cert-item">
-          <span class="cert-num">01</span>
-          <div>
-            <p class="cert-title">AWS Machine Learning Specialty</p>
-            <p class="cert-meta">Amazon Web Services · 2025</p>
-          </div>
-        </div>
-        <div class="cert-item">
-          <span class="cert-num">02</span>
-          <div>
-            <p class="cert-title">Applied AI &amp; Machine Learning</p>
-            <p class="cert-meta">Professional Training Course</p>
-          </div>
-        </div>
-        <div class="cert-item">
-          <span class="cert-num">03</span>
-          <div>
-            <p class="cert-title">Bachelor of Computer Applications</p>
-            <p class="cert-meta">Guru Gobind Singh Indraprastha University · Delhi · 2016</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <hr class="divider" />
-
-    <!-- BLOG -->
-    <section class="blog-section" id="blog">
-      <h2 class="col-heading">BLOG</h2>
-      <p class="blog-placeholder">
-        Writing on Generative AI, LLM system design, multi-agent architectures, and production lessons.
-        <br /><span class="coming-soon">Posts coming soon —</span>
-        topics: RAG pipelines · LangGraph patterns · LLM evaluation · AWS MLOps
-      </p>
-    </section>
-
-    <hr class="divider" />
-
-    <!-- FOOTER -->
-    <footer class="site-footer">
-      <p>Rajeshwar Sehdev · India · Available Immediately</p>
-      <p class="footer-links">
-        <a href="mailto:rajeshwarsehdev@gmail.com">rajeshwarsehdev@gmail.com</a>
-        &nbsp;·&nbsp;
-        <a href="https://www.linkedin.com/in/rajeshwar-sehdev-290a98b7/" target="_blank" rel="noopener">LinkedIn</a>
-        &nbsp;·&nbsp;
-        <a href="assets/CV_Rajeshwar_Sehdev.pdf" download>Download CV</a>
-      </p>
-    </footer>
-
-  </main>
-
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
 </body>
 </html>
